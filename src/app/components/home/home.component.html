@@ -1,0 +1,110 @@
+<div class="page home">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>
+                    <img class="appicon" src="assets/icons/edit.svg">
+                    <span> ToDo List App </span>
+                </h2>
+            </div>
+            <div class="col-md-6">
+                <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Add A Task" #newToDo>
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" type="submit" (click)="addToDo(newToDo)">Add</button>
+                </form>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md 12">
+                <mat-card class="d-flex">
+                    <div class="example-container">
+                        <h2>To do</h2>
+
+                        <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todos"
+                            [cdkDropListConnectedTo]="[doingList]" class="example-list"
+                            (cdkDropListDropped)="drop($event)">
+                            <div cdkDrag [cdkDragData]="todo" class="example-box" *ngFor="let todo of todos">
+                                <img class="taskicon" src="assets/icons/alarm-clock.svg">
+                                <span class="todo-title">{{todo.title}}</span>
+                                <div class="button">
+                                    <button mat-icon-button color="warn" type="submit" (click)="removeToDo(todo._id)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
+                                <div class="button">
+                                        <button mat-icon-button color="primary" (click)="updateTask(todo,1)">
+                                            <mat-icon>create</mat-icon>
+                                        </button>
+                                </div>
+                            </div>
+                            <div class="text-center" *ngIf="todos?.length === 0"><small>There aren't any todos</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-container">
+                        <h2>Doing</h2>
+
+                        <div cdkDropList #doingList="cdkDropList" [cdkDropListData]="doings"
+                            [cdkDropListConnectedTo]="[todoList,doneList]" class="example-list"
+                            (cdkDropListDropped)="drop($event)">
+                            <div cdkDrag [cdkDragData]="doing" class="example-box" *ngFor="let doing of doings" cdkDrag>
+                                <img class="taskicon" src="assets/icons/hourglass.svg">
+                                <span class="todo-title">
+                                    {{doing.title}}
+                                </span>
+                                <div class="button">
+                                    <button mat-icon-button color="warn" (click)="removeDoing(doing._id)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
+                                <div class="button">
+                                    <button mat-icon-button color="primary" (click)="updateTask(doing,2)">
+                                        <mat-icon>create</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="text-center" *ngIf="doings?.length === 0"><small>There aren't any doings</small>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="example-container">
+                        <h2>Done</h2>
+
+                        <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="dones"
+                            [cdkDropListConnectedTo]="[doingList]" class="example-list"
+                            (cdkDropListDropped)="drop($event)">
+                            <div cdkDrag [cdkDragData]="done" class="example-box" *ngFor="let done of dones" cdkDrag>
+                                <img class="taskicon" src="assets/icons/like.svg">
+                                <span class="todo-title">
+                                    {{done.title}}
+                                </span>
+                                <div class="button">
+                                    <button mat-icon-button color="warn" (click)="removeDone(done._id)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
+                                <div class="button">
+                                        <button mat-icon-button color="primary" (click)="updateTask(done,3)">
+                                            <mat-icon>create</mat-icon>
+                                        </button>
+                                </div>
+                            </div>
+                            <div class="text-center" *ngIf="dones?.length === 0"><small>There aren't any dones</small>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center mt-2">
+            <small>Copyright Tümer Seyrek</small>
+        </div>
+    </div>
+</div>
